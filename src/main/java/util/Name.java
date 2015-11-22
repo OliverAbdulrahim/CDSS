@@ -1,9 +1,12 @@
 package util;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 /**
  * The {@code Name} class encapsulates title, first, middle, and last names into
  * a single object. These names may be formatted in {@link #firstLast()
- * "first last"},  {@link #lastFirst() "last first"}, and
+ * "first last"}, {@link #lastFirst() "last first"}, and
  * {@link #lastCommaFirst() "last, first"} format. Additionally, they can be
  * retrieved individually.
  *
@@ -11,6 +14,9 @@ package util;
  */
 public final class Name {
 
+    /**
+     * Specifies a default, "{@code null} object" name.
+     */
     public static final Name NULL_NAME =
             new Name("Pres.", "Barack", "Hussein", "Obama");
 
@@ -18,7 +24,7 @@ public final class Name {
      * Stores the title of this {@code Name}, for example, {@code "Mrs."} or
      * {@code "Dr."}.
      */
-    private final String title;
+    private final Optional<String> title;
 
     /**
      * Stores the first name of this {@code Name}, for example,
@@ -26,20 +32,20 @@ public final class Name {
      *
      * <p> This value must be specified during construction.
      */
-    private final String first;
+    private final Optional<String> first;
 
     /**
      * Stores the middle name of this {@code Name}, for example,
      * {@code "Green"}.
      */
-    private final String middle;
+    private final Optional<String> middle;
 
     /**
      * Stores the last name of this {@code Name}, for example, {@code "Smith"}.
      *
      * <p> This value must be specified during construction.
      */
-    private final String last;
+    private final Optional<String> last;
 
     /**
      * Constructs a {@code Name} with the first and last given arguments.
@@ -75,10 +81,33 @@ public final class Name {
      * @param last The last name of the object.
      */
     public Name(String title, String first, String middle, String last) {
-        this.title = title;
-        this.first = first;
-        this.middle = middle;
-        this.last = last;
+        this.title = asOptional(title);
+        this.first = asOptional(first);
+        this.middle = asOptional(middle);
+        this.last = asOptional(last);
+    }
+
+    /**
+     * Capitalizes the first character of the given {@code String} and returns
+     * the result.
+     *
+     * @param str The {@code String} to capitalize
+     * @return A capitalized version of the given {@code String}.
+     */
+    private static String capitalize(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * Returns an {@code Optional} containing the specified {@code String}. If
+     * the given value is not {@code null}, then it is formatted by the
+     * {@link #capitalize(String)}} method.
+     *
+     * @param str The object to wrap with an {@code Optional}.
+     * @return An {@code Optional} containing the given {@code String}.
+     */
+    private static Optional<String> asOptional(String str) {
+        return Optional.ofNullable(str).map(Name :: capitalize);
     }
 
     /**
@@ -87,7 +116,7 @@ public final class Name {
      *
      * @return The title of this object.
      */
-    public String title() {
+    public Optional<String> title() {
         return title;
     }
 
@@ -97,7 +126,7 @@ public final class Name {
      *
      * @return The first name of this object.
      */
-    public String first() {
+    public Optional<String> first() {
         return first;
     }
 
@@ -107,7 +136,7 @@ public final class Name {
      *
      * @return The middle name of this object.
      */
-    public String middle() {
+    public Optional<String> middle() {
         return middle;
     }
 
@@ -117,7 +146,7 @@ public final class Name {
      *
      * @return The last name of this object.
      */
-    public String last() {
+    public Optional<String> last() {
         return last;
     }
 
@@ -128,7 +157,7 @@ public final class Name {
      * @return The full name represented by this object.
      */
     public String fullName() {
-        return title() + ' ' + first() + ' ' + middle()  + ' ' + last();
+        return format(title(), first(), middle(), last());
     }
 
     /**
@@ -138,7 +167,7 @@ public final class Name {
      * @return The first name followed by the last name.
      */
     public String firstLast() {
-        return first() + ' ' + last();
+        return format(first(), last());
     }
 
     /**
@@ -148,7 +177,7 @@ public final class Name {
      * @return The first name followed by the last name.
      */
     public String lastFirst() {
-        return last() + ' ' + first();
+        return format(last(), first());
     }
 
     /**
@@ -158,12 +187,28 @@ public final class Name {
      * @return The first name followed by the last name.
      */
     public String lastCommaFirst() {
-        return last() + ',' + ' ' + first();
+        return format(last(), first()).replace(" ", ", ");
+    }
+
+    /**
+     * Returns a {@code String} containing a concatenation of the values of the
+     * given {@code Optional} objects, if present, delimited by a single space.
+     *
+     * @param what The {@code Optional} objects whose contents to format.
+     * @return A {@code String} formatted to contain the contents of the given
+     *         {@code Optional} objects.
+     */
+    @SafeVarargs
+    private static String format(Optional<String>... what) {
+        return Arrays
+                .stream(what)
+                .map(o -> o.map(s -> s + ' ').orElse(""))
+                .reduce("", String :: concat);
     }
 
     /**
      * Returns a {@code String} representation of this name, containing the
-     * title, first, middle, and last names, in that order.
+     * first and last names stored by this class, if present, in that order.
      *
      * @return A {@code String} representation of this name.
      * @see #firstLast()
