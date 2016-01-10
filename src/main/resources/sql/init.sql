@@ -1,0 +1,35 @@
+CREATE TABLE "Patient" (
+	`ID`	INTEGER NOT NULL UNIQUE,
+	`Name`	TEXT NOT NULL,
+	`BirthDate`	TEXT NOT NULL,
+	`LastUpdated`	TEXT NOT NULL,
+	PRIMARY KEY(ID)
+)
+
+CREATE TABLE "Ailment" (
+	`ID`	INTEGER NOT NULL UNIQUE,
+	`Name`	INTEGER NOT NULL,
+	`LastUpdated`	INTEGER NOT NULL,
+	PRIMARY KEY(ID)
+)
+
+CREATE TABLE "Symptom" (
+	`ID`	INTEGER NOT NULL UNIQUE,
+	`Name`	TEXT NOT NULL,
+	`LastUpdated`	INTEGER NOT NULL,
+	PRIMARY KEY(ID)
+)
+
+CREATE TABLE `PatientAilment` (
+	`PatientID`	INTEGER NOT NULL,
+	`AilmentID`	INTEGER NOT NULL,
+	`LastUpdated`	TEXT NOT NULL,
+	PRIMARY KEY(PatientID,AilmentID)
+)
+
+CREATE TABLE `AilmentSymptom` (
+	`AilmentID`	INTEGER NOT NULL,
+	`SymptomID`	INTEGER NOT NULL,
+	`LastUpdated`	TEXT NOT NULL,
+	PRIMARY KEY(AilmentID,SymptomID)
+)
