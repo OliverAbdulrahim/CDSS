@@ -18,7 +18,6 @@ import java.util.Set;
  * comparisons.
  *
  * @implSpec This class is mutable, and therefore not thread-safe!
- *
  * @author Oliver Abdulrahim
  */
 public class Patient
