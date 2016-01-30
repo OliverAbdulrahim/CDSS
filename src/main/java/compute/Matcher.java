@@ -10,7 +10,7 @@ import java.util.Collection;
  * <p>This is a <em>functional interface</em> whose functional method is
  * {@link #compute(Collection, Comparable)}.
  *
- * @param <T> The type of the input to the function, upper bounded by
+ * @param <T> The type of the input to the function, lower bounded by
  *        {@code Comparable}.
  * @author Oliver Abdulrahim
  */
