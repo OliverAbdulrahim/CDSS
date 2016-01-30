@@ -51,17 +51,15 @@ public class Patient
     private Set<Symptom> symptoms;
 
     /**
-     * Stores the last time this object was mutated.
-     */
-    private LocalDate lastUpdated;
-
-    /**
      * Constructs a {@code Patient} that is an exact copy of the given one.
      *
      * @param other The object to copy.
      */
     public Patient(Patient other) {
-        this(other.id(), other.name(), other.getBirthDate(), other.getGender());
+        this(other.getID(),
+             other.getName(),
+             other.getBirthDate(),
+             other.getGender());
         this.ailments.addAll(other.ailments);
     }
 
@@ -75,9 +73,9 @@ public class Patient
      */
     public Patient(int id, String name, LocalDate birthDate, Gender gender) {
         super(id, name);
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.ageGroup = AgeGroup.asAgeGroup(birthDate);
+        setGender(gender);
+        setBirthDate(birthDate);
+        setAgeGroup(AgeGroup.asAgeGroup(birthDate).orElse(AgeGroup.ADULT));
         this.ailments = new HashSet<>();
     }
 
@@ -98,7 +96,7 @@ public class Patient
      */
     public void setAgeGroup(AgeGroup ageGroup) {
         Objects.requireNonNull(ageGroup);
-        dataUpdated();
+        mutated();
         this.ageGroup = ageGroup;
     }
 
@@ -119,7 +117,7 @@ public class Patient
      */
     public void setBirthDate(LocalDate birthDate) {
         Objects.requireNonNull(birthDate);
-        dataUpdated();
+        mutated();
         this.birthDate = birthDate;
     }
 
@@ -140,7 +138,7 @@ public class Patient
      */
     public void setGender(Gender gender) {
         Objects.requireNonNull(birthDate);
-        dataUpdated();
+        mutated();
         this.gender = gender;
     }
 
@@ -161,7 +159,7 @@ public class Patient
      */
     public void setSymptoms(Set<Ailment> ailments) {
         Objects.requireNonNull(ailments);
-        dataUpdated();
+        mutated();
         this.ailments = ailments;
     }
 
@@ -182,35 +180,8 @@ public class Patient
      */
     public void setAilments(Set<Symptom> symptom) {
         Objects.requireNonNull(symptom);
-        dataUpdated();
+        mutated();
         this.symptoms = symptom;
-    }
-
-    /**
-     * Returns the last updated date of this object.
-     *
-     * @return The last date this object was mutated.
-     */
-    public LocalDate getLastUpdated() {
-        return lastUpdated;
-    }
-
-    /**
-     * Sets the last update date for this {@code Patient} to the object.
-     *
-     * @param lastUpdated The new last update date for this object.
-     * @throws NullPointerException if the given argument is {@code null}.
-     */
-    public void setLastUpdated(LocalDate lastUpdated) {
-        Objects.requireNonNull(lastUpdated);
-        this.lastUpdated = lastUpdated;
-    }
-
-    /**
-     * Handles updating of the {@link #lastUpdated} field for this object.
-     */
-    private void dataUpdated() {
-        setLastUpdated(LocalDate.now());
     }
 
     /**
@@ -225,7 +196,7 @@ public class Patient
      */
     @Override
     public int compareTo(Patient other) {
-        return this.name().compareTo(other.name())
+        return this.getName().compareTo(other.getName())
              + this.ageGroup.compareTo(other.ageGroup)
              + this.birthDate.compareTo(other.birthDate)
              + this.gender.compareTo(other.gender);

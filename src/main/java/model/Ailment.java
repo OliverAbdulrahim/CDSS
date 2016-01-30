@@ -57,6 +57,7 @@ public final class Ailment
      */
     public void setSymptoms(Set<Symptom> symptoms) {
         Objects.requireNonNull(symptoms);
+        mutated();
         this.symptoms = symptoms;
     }
 
@@ -72,6 +73,7 @@ public final class Ailment
      */
     public boolean addSymptom(Symptom symptom) {
         Objects.requireNonNull(symptom);
+        mutated();
         return symptoms.add(symptom);
     }
 

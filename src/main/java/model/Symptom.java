@@ -20,13 +20,29 @@ public final class Symptom
     extends SQLObject<Symptom>
 {
 
+    /**
+     * Constructs a {@code Symptom} with the given values.
+     *
+     * @param id The identification number for the {@code Symptom}.
+     * @param name The name of the {@code Symptom}.
+     */
     public Symptom(int id, String name) {
         super(id, name);
     }
 
+    /**
+     * Compares the given object to this one for order, returning a negative
+     * number, zero, or a positive number if this object is less than, equal to,
+     * or greater than the given object, respectively.
+     *
+     * @param other The object to compare to this one.
+     * @return A negative number, zero, or a positive number if this object is
+     *         less than, equal to, or greater than the given object,
+     *         respectively.
+     */
     @Override
     public int compareTo(Symptom other) {
-        return this.name().compareTo(other.name());
+        return this.getName().compareTo(other.getName());
     }
 
 }

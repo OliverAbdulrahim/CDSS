@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -52,17 +53,18 @@ public enum AgeGroup {
     }
 
     /**
-     * Returns the {@code AgeGroup} that contains the given date.
+     * Returns an {@code Optional} containing the enumeration that includes the
+     * given date, or an empty one if there is no such element.
      *
      * @param date The date to return an enumeration for.
-     * @return The {@code AgeGroup} that contains the given date.
+     * @return An {@code Optional} containing the enumeration that includes the
+     *         given date.
      */
-    public static AgeGroup asAgeGroup(LocalDate date) {
+    public static Optional<AgeGroup> asAgeGroup(LocalDate date) {
         return ALL
                 .stream()
                 .filter(ageGroup -> ageGroup.includes(date))
-                .findFirst()
-                .get();
+                .findFirst();
     }
 
     /**

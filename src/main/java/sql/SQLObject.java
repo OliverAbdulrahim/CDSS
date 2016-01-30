@@ -68,7 +68,7 @@ public abstract class SQLObject<T extends SQLObject>
      * @throws NullPointerException if the given argument is {@code null}.
      */
     public void setID(int id) {
-        dataUpdated();
+        mutated();
         this.id = id;
     }
 
@@ -89,7 +89,7 @@ public abstract class SQLObject<T extends SQLObject>
      */
     public void setName(String name) {
         Objects.requireNonNull(name);
-        dataUpdated();
+        mutated();
         this.name = name;
     }
 
@@ -116,7 +116,7 @@ public abstract class SQLObject<T extends SQLObject>
     /**
      * Handles updating of the {@link #lastUpdated} field for this object.
      */
-    protected void dataUpdated() {
+    protected void mutated() {
         setLastUpdated(LocalDate.now());
     }
 
