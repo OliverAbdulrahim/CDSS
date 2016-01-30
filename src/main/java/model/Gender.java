@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Contains an enumeration genders.
+ * Contains an enumeration of genders.
  *
  * @implNote {@link Enum The enum class} is already {@code Comparable}, and
  *           the {@code super} implementation is sufficient in this case
@@ -11,6 +11,7 @@ package model;
 public enum Gender
     implements Comparable<Gender>
 {
+    
     MALE, FEMALE;
 
     /**
