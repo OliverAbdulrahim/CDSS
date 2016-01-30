@@ -153,4 +153,14 @@ public final class Pair<A, B>
         return Objects.hash(key, value);
     }
 
+    /**
+     * Returns a {@code String} containing the key-value mapping of this object.
+     *
+     * @return A {@code String} containing the key-value mapping of this object.
+     */
+    @Override
+    public String toString() {
+        return "Pair[" + key + '=' + value + ']';
+    }
+    
 }
