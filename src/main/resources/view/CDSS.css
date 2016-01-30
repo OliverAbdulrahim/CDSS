@@ -1,0 +1,48 @@
+.theme {
+    master-color: grey;
+    -fx-background-color: derive(master-color, 70%);
+    -fx-font-size: 14px;
+}
+
+.split-pane {
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-background-color: derive(master-color, 100%);
+}
+
+.darken {
+    -fx-background-color: derive(master-color, -60%)
+}
+
+.darken .list-cell {
+    -fx-padding: 6 0 0 13;
+    -fx-background-color: derive(master-color, -60%);
+    -fx-text-fill: lightgrey;
+}
+
+.darken .list-cell:focused {
+    -fx-text-fill: white
+}
+
+.table-view {
+    -fx-border-width: 0;
+    -fx-border-color: red;
+}
+
+.label {
+    -fx-text-fill: derive(master-color, -20%);
+    -fx-font-size: 12px;
+}
+
+.button {
+    -fx-text-fill: WHITE;
+}
+
+.button-blue {
+    -fx-background-color: rgba(77, 102, 204, 0.5);
+}
+
+.button-red {
+    -fx-background-color: rgba(196, 47,47, 0.5);
+}
+
