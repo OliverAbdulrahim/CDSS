@@ -61,7 +61,7 @@ public interface BaseAccessor<T extends SQLObject<T>> {
      */
     default Optional<T> find(int id) {
         return all()
-                .filter(t -> t.id() == id)
+                .filter(t -> t.getID() == id)
                 .findFirst();
     }
 
