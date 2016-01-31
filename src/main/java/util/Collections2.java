@@ -107,7 +107,7 @@ public final class Collections2 {
     public static int compare(Collection<?> c1, Collection<?> c2) {
         return c1
                 .stream()
-                .reduce(Integer.MIN_VALUE,
+                .reduce(c1.size(),
                         (accumulator, obj) -> accumulator + frequency(c2, obj),
                         Integer :: sum
                 );
