@@ -1,6 +1,7 @@
 package sql.access;
 
 import sql.BaseAccessor;
+import sql.Database;
 import sql.SQLObject;
 import sql.Table;
 
@@ -23,27 +24,56 @@ import java.util.stream.Stream;
 
 import static util.reflect.ReflectionUtilities.*;
 
-public abstract class AbstractSQLAccessor<T extends SQLObject<T>>
+/**
+ * This class provides a skeletal implementation of the {@link BaseAccessor}
+ * interface.
+ *
+ * @param <T> {@inheritDoc}
+ */
+public abstract class AbstractSQLAccessor<T extends SQLObject<? super T>>
     implements BaseAccessor<T>
 {
 
     private static final Logger LOG =
             Logger.getLogger(AbstractSQLAccessor.class.getName());
 
+    /**
+     * Provides for a connection to the SQL database.
+     */
     private final Connection connection;
 
-    private final Table<T> table;
+    /**
+     * Encapsulation of the SQL table that this object represents.
+     */
+    private final Table<? extends T> table;
 
-    public AbstractSQLAccessor(Connection connection, Table<T> table) {
+    /**
+     * Sole constructor for use by subclasses only. Constructs a new
+     * {@code AbstractSQLAccessor} with the given arguments.
+     *
+     * @param connection The database connection for the object.
+     * @param table The table for the object. Common {@code Table} objects are
+     *        enumerated in the {@link Database} class.
+     */
+    protected AbstractSQLAccessor(Connection connection, Table<T> table) {
         this.connection = connection;
         this.table = table;
     }
 
-    // Provides an interface with the table
-    public Collection<T> query(String sql) {
+    /**
+     * Queries the table represented by this object using the given
+     * {@code String} SQL statement, returning a {@code Collection} containing
+     * the result of the operation.
+     *
+     * @param statement The SQL statement to execute.
+     * @return The result of executing the given SQL statement.
+     * @apiNote This implementation returns a {@code Collection} of type
+     *          {@code HashSet}.
+     */
+    public Collection<T> query(String statement) {
         Set<T> data = new HashSet<>();
-        try (PreparedStatement s = connection.prepareStatement(sql);
-             ResultSet result = s.executeQuery(sql))
+        try (PreparedStatement s = connection.prepareStatement(statement);
+             ResultSet result = s.executeQuery(statement))
         {
             while (result.next()) {
                 T next = createFromSQL(targetClass(), result);
@@ -56,15 +86,33 @@ public abstract class AbstractSQLAccessor<T extends SQLObject<T>>
         return data;
     }
 
-    public Class<? extends T> targetClass() {
+    /**
+     * Returns the {@code Class} of the Java objects represented by this object.
+     *
+     * @return The {@code Class} of the Java objects represented by this object.
+     */
+    protected Class<? extends T> targetClass() {
         return table.getTargetClass();
     }
 
+    /**
+     * Returns the name of the SQL table this object represents.
+     *
+     * @return The name of the SQL table this object represents.
+     */
     public String tableName() {
-        return table.getTableName();
+        return table.getName();
     }
 
-    public abstract T createFromSQL(ResultSet result) throws SQLException;
+    /**
+     * Returns a new object of generic type {@code T} and updates its contents
+     * using the given {@code ResultSet}.
+     *
+     * @param result The result containing the data for the object to construct.
+     * @return A new object of generic type {@code T} that stores the contents
+     *         {@code ResultSet}.
+     */
+    public abstract T createFromSQL(ResultSet result);
 
     /**
      * Creates and returns an instance of the given {@code Class}, the
@@ -109,39 +157,85 @@ public abstract class AbstractSQLAccessor<T extends SQLObject<T>>
         return obj;
     }
 
-    private boolean doQuery(String sql) {
-        query(sql);
+    /**
+     * Executes the given SQL statement, returning {@code true}.
+     *
+     * @param statement The SQL statement to execute.
+     * @return {@code true}.
+     */
+    private boolean executeQuery(String statement) {
+        query(statement);
         return true;
     }
 
+    /**
+     * Returns a {@code Stream} containing all rows in the SQL table that this
+     * object represents, expressed as Java objects.
+     *
+     * @return A {@code Stream} containing all rows in the SQL table as Java
+     *         objects.
+     */
     @Override
     public Stream<T> all() {
         String q = "SELECT * FROM " + tableName();
         return query(q).stream();
     }
 
+    /**
+     * Inserts into the database this object represents the given element,
+     * returning {@code true} if the operation was successful, {@code false}
+     * otherwise.
+     *
+     * @param element The element to insert.
+     * @return {@code true} if the insert operation was successful,
+     *         {@code false} otherwise.
+     */
     @Override
     public boolean insert(T element) {
         String q = "INSERT INTO" + tableName()
                 + "  VALUES (" + element.toINSERTString() + ')'; // TODO figure out if it needs parenthesis
-        return doQuery(q);
+        return executeQuery(q);
     }
 
+    /**
+     * Deletes from the database this object represents the given element,
+     * returning {@code true} if the operation was successful, {@code false}
+     * otherwise.
+     *
+     * @param element The element to delete.
+     * @return {@code true} if the delete operation was successful,
+     *         {@code false} otherwise.
+     */
     @Override
     public boolean delete(T element) {
         String q = "DELETE FROM" + tableName()
-                 + "  WHERE id=" + element.id();
-        return doQuery(q);
+                 + "  WHERE id=" + element.getID();
+        return executeQuery(q);
     }
 
+    /**
+     * Updates the given element, if it exists in the database this object
+     * represents, returning {@code true} if the operation was successful,
+     * {@code false} otherwise.
+     *
+     * @param element The element containing the updated data.
+     * @return {@code true} if the update operation was successful,
+     *         {@code false} otherwise.
+     */
     @Override
     public boolean update(T element) {
         String q = "UPDATE " + tableName()
                  + "  SET " + element.toSETString()
-                 + "  WHERE id=" + element.id();
-        return doQuery(q);
+                 + "  WHERE id=" + element.getID();
+        return executeQuery(q);
     }
 
+    /**
+     * Returns a {@code String} containing the name, Java object class, and
+     * database connection of this object.
+     *
+     * @return A {@code String} representation of this object.
+     */
     @Override
     public String toString() {
         return "Accessor for table [" + tableName()

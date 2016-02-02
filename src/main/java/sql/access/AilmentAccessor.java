@@ -1,17 +1,18 @@
 package sql.access;
 
 import model.Ailment;
-import model.Patient;
 import sql.Database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Set;
 
 /**
- * Implementation of {@link AbstractSQLAccessor} that allows for the creation of
- * {@link Ailment} objects from SQL.
+ * Implementation of {@link AbstractSQLAccessor} that wraps the
+ * {@link Ailment} class, allowing for the creation of {@code Ailment} objects
+ * from SQL.
+ *
+ * @author Oliver Abdulrahim
+ * @see Ailment
  */
 public class AilmentAccessor
     extends AbstractSQLAccessor<Ailment>
@@ -27,42 +28,15 @@ public class AilmentAccessor
     }
 
     /**
-     * Returns a {@code Set} containing all {@code Patient}s with the given
-     * {@code Ailment}.
+     * Constructs a new {@code Ailment}, whose attributes are loaded from the
+     * given {@code ResultSet}.
      *
-     * @param ailment The {@code Ailment} to collect.
-     * @return A {@code Set} containing all {@code Patient}s with the given
-     *         {@code Ailment}.
+     * @param result The result containing the data for the object to construct.
+     * @return A new {@code Ailment} containing the data stored in the given
+     *         {@code ResultSet}.
      */
-    public Set<Patient> collect(Ailment ailment) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Returns the {@code Ailment} occurring most minimally.
-     *
-     * <p> This method performs a special case of reduction. // TODO add example and detail implementation
-     *
-     * @return The {@code Ailment} occurring most minimally.
-     */
-    public Ailment minimal() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Returns the value defined by the given {@code Comparator} as the maximal
-     * element.
-     *
-     * <p> This method performs a special case of reduction. // TODO add example and detail implementation
-     *
-     * @return The {@code Ailment} occurring most minimally.
-     */
-    public Ailment maximal() {
-        throw new UnsupportedOperationException();
-    }
-
     @Override
-    public Ailment createFromSQL(ResultSet result) throws SQLException {
+    public Ailment createFromSQL(ResultSet result) {
         return createFromSQL(Ailment.class, result);
     }
 
