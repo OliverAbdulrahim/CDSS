@@ -1,7 +1,7 @@
 package model;
 
 import sql.SQLObject;
-import util.Collections2;
+import util.Streams;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -224,7 +224,7 @@ public class Patient
              + this.ageGroup.compareTo(other.ageGroup)
              + this.birthDate.compareTo(other.birthDate)
              + this.gender.compareTo(other.gender)
-             + 2 * Collections2.compare(this.symptoms, other.symptoms);
+             + 2 * Streams.compare(this.symptoms, other.symptoms);
     }
 
 }

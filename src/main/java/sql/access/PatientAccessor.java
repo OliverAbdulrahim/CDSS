@@ -4,7 +4,7 @@ import model.Ailment;
 import model.Patient;
 import model.Symptom;
 import sql.Database;
-import util.Collections2;
+import util.Streams;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -55,7 +55,7 @@ public class PatientAccessor
      *         {@code Patient}s in the given {@code Collection}.
      */
     public Set<Ailment> union() {
-        return Collections2.union(
+        return Streams.union(
                 all(),
                 patient -> patient.getAilments().stream()
         );
@@ -71,7 +71,7 @@ public class PatientAccessor
      *         given {@code Patient}s.
      */
     public static Set<Symptom> intersection(Patient first, Patient second) {
-        return Collections2.intersection(
+        return Streams.intersection(
                 first.getSymptoms().stream(),
                 second.getSymptoms().stream()
         );

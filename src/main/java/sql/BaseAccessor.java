@@ -1,6 +1,6 @@
 package sql;
 
-import util.Collections2;
+import util.Streams;
 
 import java.util.Comparator;
 import java.util.List;
@@ -151,7 +151,7 @@ public interface BaseAccessor<T extends SQLObject<? super T>> {
      * @throws NoSuchElementException if no element is found.
      */
     default T minimal() {
-        return Collections2.min(all())
+        return Streams.min(all())
                 .orElseThrow(NoSuchElementException :: new);
     }
 
@@ -162,7 +162,7 @@ public interface BaseAccessor<T extends SQLObject<? super T>> {
      * @throws NoSuchElementException if no element is found.
      */
     default T maximal() {
-        return Collections2.max(all())
+        return Streams.max(all())
                 .orElseThrow(NoSuchElementException :: new);
     }
 
