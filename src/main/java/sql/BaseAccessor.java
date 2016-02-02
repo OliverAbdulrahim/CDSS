@@ -1,8 +1,11 @@
 package sql;
 
+import util.Collections2;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -10,7 +13,16 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public interface BaseAccessor<T extends SQLObject<T>> {
+/**
+ * An interface between an SQL database and Java objects. Several querying
+ * operations are specified and by default, implemented in this interface.
+ * Implementors may choose to override these methods if desired, but the logic
+ * defined in this class provides for the best general-case performance.
+ *
+ * @param <T> The type of elements stored by this accessor, parametrized over
+ *        {@link SQLObject}.
+ */
+public interface BaseAccessor<T extends SQLObject<? super T>> {
 
     @Override
     String toString();
@@ -130,6 +142,28 @@ public interface BaseAccessor<T extends SQLObject<T>> {
         return all()
                 .filter(counter)
                 .collect(Collectors.counting());
+    }
+
+    /**
+     * Returns the element occurring most minimally.
+     *
+     * @return The element occurring most minimally.
+     * @throws NoSuchElementException if no element is found.
+     */
+    default T minimal() {
+        return Collections2.min(all())
+                .orElseThrow(NoSuchElementException :: new);
+    }
+
+    /**
+     * Returns the element occurring most maximally.
+     *
+     * @return The element occurring most maximally.
+     * @throws NoSuchElementException if no element is found.
+     */
+    default T maximal() {
+        return Collections2.max(all())
+                .orElseThrow(NoSuchElementException :: new);
     }
 
 }
