@@ -76,7 +76,7 @@ public abstract class AbstractSQLAccessor<T extends SQLObject<? super T>>
              ResultSet result = s.executeQuery(statement))
         {
             while (result.next()) {
-                T next = createFromSQL(targetClass(), result);
+                T next = createFromSQL(result);
                 data.add(next);
             }
         }
@@ -193,7 +193,7 @@ public abstract class AbstractSQLAccessor<T extends SQLObject<? super T>>
     @Override
     public boolean insert(T element) {
         String q = "INSERT INTO" + tableName()
-                + "  VALUES (" + element.toINSERTString() + ')'; // TODO figure out if it needs parenthesis
+                + "  VALUES (" + element.toINSERTString() + ')';
         return executeQuery(q);
     }
 
