@@ -24,9 +24,9 @@ import static java.util.Collections.frequency;
 public final class Streams {
 
     /**
-     * Compares the given {@code Ailment} to this one for order, returning a
-     * negative number, zero, or a positive number if {@code c1} is less than,
-     * equal to, or greater than {@code c2}, respectively.
+     * Compares the contents of two {@code Collection} objects for order,
+     * returning a negative number, zero, or a positive number if {@code c1} is
+     * less than, equal to, or greater than {@code c2}, respectively.
      *
      * @param c1 The {@code Collection} to test against {@code c2}.
      * @param c2 The {@code Collection} to test against {@code c1}.
