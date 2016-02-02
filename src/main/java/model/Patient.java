@@ -28,7 +28,7 @@ public class Patient
     /**
      * The age group of this {@code Patient}.
      */
-    private AgeGroup ageGroup;
+    private transient AgeGroup ageGroup;
 
     /**
      * The gender of this {@code Patient}.
