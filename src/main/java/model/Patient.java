@@ -1,6 +1,7 @@
 package model;
 
 import sql.SQLObject;
+import util.Collections2;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -184,6 +185,30 @@ public class Patient
     }
 
     /**
+     * Returns {@code true} if this {@code Patient} has the given
+     * {@code Ailment}, {@code false} otherwise.
+     *
+     * @param ailment The ailment to test.
+     * @return {@code true} if this {@code Patient} has the given
+     *         {@code Ailment}, {@code false} otherwise.
+     */
+    public boolean hasAilment(Ailment ailment) {
+        return ailments.contains(ailment);
+    }
+
+    /**
+     * Returns {@code true} if this {@code Patient} has the given
+     * {@code Symptom}, {@code false} otherwise.
+     *
+     * @param symptom The ailment to test.
+     * @return {@code true} if this {@code Patient} has the given
+     *         {@code Symptom}, {@code false} otherwise.
+     */
+    public boolean hasSymptom(Symptom symptom) {
+        return symptoms.contains(symptom);
+    }
+
+    /**
      * Compares the given {@code Patient} to this one for order, returning a
      * negative number, zero, or a positive number if this object is less than,
      * equal to, or greater than the given object, respectively.
@@ -198,7 +223,8 @@ public class Patient
         return this.getName().compareTo(other.getName())
              + this.ageGroup.compareTo(other.ageGroup)
              + this.birthDate.compareTo(other.birthDate)
-             + this.gender.compareTo(other.gender);
+             + this.gender.compareTo(other.gender)
+             + 2 * Collections2.compare(this.symptoms, other.symptoms);
     }
 
 }
