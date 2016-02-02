@@ -24,6 +24,12 @@ import java.util.stream.Stream;
  */
 public interface BaseAccessor<T extends SQLObject<? super T>> {
 
+    /**
+     * Returns a {@code String} representation of the elements contained in this
+     * object.
+     *
+     * @return A {@code String} representation of this object.
+     */
     @Override
     String toString();
 
