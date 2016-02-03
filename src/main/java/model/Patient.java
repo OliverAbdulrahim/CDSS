@@ -1,7 +1,7 @@
 package model;
 
 import sql.SQLObject;
-import util.Streams;
+import util.stream.Streams;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -220,11 +220,11 @@ public class Patient
      */
     @Override
     public int compareTo(Patient other) {
-        return this.getName().compareTo(other.getName())
-             + this.ageGroup.compareTo(other.ageGroup)
-             + this.birthDate.compareTo(other.birthDate)
-             + this.gender.compareTo(other.gender)
-             + 2 * Streams.compare(this.symptoms, other.symptoms);
+        return (int) (this.getName().compareTo(other.getName())
+                + this.ageGroup.compareTo(other.ageGroup)
+                + this.birthDate.compareTo(other.birthDate)
+                + this.gender.compareTo(other.gender)
+                + 2 * Streams.compare(this.symptoms, other.symptoms));
     }
 
 }

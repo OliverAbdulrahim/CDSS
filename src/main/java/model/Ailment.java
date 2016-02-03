@@ -1,7 +1,7 @@
 package model;
 
 import sql.SQLObject;
-import util.Streams;
+import util.stream.Streams;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -89,7 +89,7 @@ public final class Ailment
      */
     @Override
     public int compareTo(Ailment other) {
-        return Streams.compare(this.getSymptoms(), other.getSymptoms());
+        return (int) Streams.compare(this.getSymptoms(), other.getSymptoms());
     }
 
 }
