@@ -5,7 +5,6 @@ import util.Streams;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -112,29 +111,29 @@ public interface BaseAccessor<T extends SQLObject<? super T>> {
     }
 
     /**
-     * Returns the value defined by the given {@code Comparator} as the minimal
-     * element.
+     * Returns an {@code Optional} containing the value defined by the given
+     * {@code Comparator} as the minimal element, or an empty one if there is no
+     * such element.
      *
      * @param comparator The comparison function.
-     * @return The minimal value.
+     * @return An {@code Optional} containing the minimal value.
      */
-    default T minBy(Comparator<? super T> comparator) {
+    default Optional<T> minBy(Comparator<? super T> comparator) {
         return all()
-                .collect(Collectors.minBy(comparator))
-                .get();
+                .collect(Collectors.minBy(comparator));
     }
 
     /**
-     * Returns the value defined by the given {@code Comparator} as the maximal
-     * element.
+     * Returns an {@code Optional} containing the value defined by the given
+     * {@code Comparator} as the maximal element, or an empty one if there is no
+     * such element.
      *
      * @param comparator The comparison function.
-     * @return The maximal value.
+     * @return An {@code Optional} containing the maximal value.
      */
-    default T maxBy(Comparator<? super T> comparator) {
+    default Optional<T> maxBy(Comparator<? super T> comparator) {
         return all()
-                .collect(Collectors.maxBy(comparator))
-                .get();
+                .collect(Collectors.maxBy(comparator));
     }
 
     /**
@@ -151,25 +150,27 @@ public interface BaseAccessor<T extends SQLObject<? super T>> {
     }
 
     /**
-     * Returns the element occurring most minimally.
+     * Returns an {@code Optional} containing the element occurring most
+     * minimally, or an empty one if there is no such element.
      *
-     * @return The element occurring most minimally.
-     * @throws NoSuchElementException if no element is found.
+     * @return An {@code Optional} containing the element occurring most
+     *         minimally.
      */
-    default T minimal() {
-        return Streams.min(all())
-                .orElseThrow(NoSuchElementException :: new);
+    default Optional<T> minimal() {
+        return Streams
+                .min(all());
     }
 
     /**
-     * Returns the element occurring most maximally.
+     * Returns an {@code Optional} containing the element occurring most
+     * maximally, or an empty one if there is no such element.
      *
-     * @return The element occurring most maximally.
-     * @throws NoSuchElementException if no element is found.
+     * @return An {@code Optional} containing the element occurring most
+     *         maximally.
      */
-    default T maximal() {
-        return Streams.max(all())
-                .orElseThrow(NoSuchElementException :: new);
+    default Optional<T> maximal() {
+        return Streams
+                .max(all());
     }
 
 }
