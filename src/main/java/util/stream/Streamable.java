@@ -1,7 +1,5 @@
 package util.stream;
 
-import util.Streams;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +16,7 @@ import java.util.stream.Stream;
  * @param <T> The type of object in the {@code Stream}.
  * @see Stream
  */
-public interface Streamable<T>
-    extends Stream<T>
-{
+public interface Streamable<T> {
 
     /**
      * Returns a {@link Stream Stream} containing all elements the table. The
