@@ -11,8 +11,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.Collections.frequency;
-
 /**
  * The {@code Streams} class contains utility methods related to the
  * {@link Collection} and {@link Stream} hierarchies.
@@ -33,13 +31,54 @@ public final class Streams {
      * @return A negative number, zero, or a positive number if {@code c1} is
      *         less than, equal to, or greater than {@code c2}, respectively.
      */
-    public static int compare(Collection<?> c1, Collection<?> c2) {
-        return c1
-                .stream()
-                .reduce(c1.size(),
-                        (accumulator, obj) -> accumulator + frequency(c2, obj),
-                        Integer :: sum
+    public static long compare(Collection<?> c1, Collection<?> c2) {
+        return compare(c1.stream(), c2.stream());
+    }
+
+    /**
+     * Compares the contents of two {@code Stream} objects for order, returning
+     * a negative number, zero, or a positive number if {@code s1} is less than,
+     * equal to, or greater than {@code s2}, respectively.
+     *
+     * @param s1 The {@code Stream} to test against {@code s2}.
+     * @param s2 The {@code Stream} to test against {@code s1}.
+     * @return A negative number, zero, or a positive number if {@code s1} is
+     *         less than, equal to, or greater than {@code s2}, respectively.
+     */
+    public static long compare(Stream<?> s1, Stream<?> s2) {
+        return s1
+                .reduce(s1.count(),
+                        (accumulator, obj) -> accumulator + frequency(s2, obj),
+                        Long :: sum
                 );
+    }
+
+    /**
+     * Returns a count of the elements in the specified {@code Collection} that
+     * equal the given object.
+     *
+     * @param c The {@code Collection} in which to determine the frequency of
+     *        the given object.
+     * @param obj The object whose frequency to test.
+     * @return A count of the elements that match the given object contained in
+     *         the given {@code Collection}.
+     */
+    public static long frequency(Collection<?> c, Object obj) {
+        return frequency(c.stream(), obj);
+    }
+
+    /**
+     * Returns a count of the elements in the specified {@code Stream} that
+     * equal the given object.
+     *
+     * @param s The {@code Stream} in which to determine the frequency of the
+     *        given object.
+     * @param obj The object whose frequency to test.
+     * @return A count of the elements that match the given object contained in
+     *         the given {@code Stream}.
+     */
+    public static long frequency(Stream<?> s, Object obj) {
+        return s.map(o -> o.equals(obj)).count();
     }
 
     /**
@@ -81,18 +120,19 @@ public final class Streams {
 
     /**
      * Returns a {@code Set} containing the union of the elements in the given
-     * {@code Stream}.
+     * {@code Stream}s.
      *
-     * @param s The {@code Stream} whose elements to unify.
+     * @param ss The {@code Stream}s whose elements to unify.
      * @return A {@code Set} union of the elements of the given {@code Stream}.
      */
-    public static <T> Set<T> union(Stream<? extends T> s) {
-        return union(s, Stream :: of);
+    @SafeVarargs
+    public static <T> Set<T> union(Stream<? extends T>... ss) {
+        return flatUnion(Arrays.stream(ss), Function.identity());
     }
 
     /**
-     * Returns a {@code Set} containing the union of the elements in the given
-     * {@code Stream}, partitioned by the supplied mapping function.
+     * Returns a {@code Set} union containing the result of applying given
+     * flat-mapping {@code Function} to the given {@code Stream}.
      *
      * @param s The {@code Stream} whose elements to unify using the specified
      *        mapping {@code Function}.
@@ -100,7 +140,7 @@ public final class Streams {
      *        elements in the given {@code Stream}.
      * @return A {@code Set} union of the elements of the given {@code Stream}.
      */
-    public static <T, R> Set<R> union(
+    public static <T, R> Set<R> flatUnion(
             Stream<? extends T> s,
             Function<? super T, ? extends Stream<? extends R>> mapper)
     {
@@ -121,10 +161,7 @@ public final class Streams {
      * @return A {@code Set} intersection of the elements of the given
      *         {@code Stream}s.
      */
-    public static <T> Set<T> intersection(
-            Stream<? extends T> a,
-            Stream<? extends T> b)
-    {
+    public static <T> Set<T> intersection(Stream<T> a, Stream<T> b) {
         return a
                 .filter(t -> contains(b, t))
                 .collect(Collectors.toSet());

@@ -55,7 +55,7 @@ public class PatientAccessor
      *         {@code Patient}s in the given {@code Collection}.
      */
     public Set<Ailment> union() {
-        return Streams.union(
+        return Streams.flatUnion(
                 all(),
                 patient -> patient.getAilments().stream()
         );
