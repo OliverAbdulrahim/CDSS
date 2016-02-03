@@ -1,4 +1,6 @@
-package util;
+package util.stream;
+
+import util.Streams;
 
 import java.util.Comparator;
 import java.util.List;

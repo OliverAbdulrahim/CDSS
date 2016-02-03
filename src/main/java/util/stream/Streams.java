@@ -1,4 +1,4 @@
-package util;
+package util.stream;
 
 import java.util.Arrays;
 import java.util.Collection;
