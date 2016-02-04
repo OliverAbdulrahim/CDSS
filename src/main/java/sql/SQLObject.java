@@ -65,7 +65,6 @@ public abstract class SQLObject<T extends SQLObject>
      * one.
      *
      * @param id The new identification number of the {@code SQLObject}.
-     * @throws NullPointerException if the given argument is {@code null}.
      */
     public void setID(int id) {
         mutated();
