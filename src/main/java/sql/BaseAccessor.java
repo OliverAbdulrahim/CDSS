@@ -2,18 +2,12 @@ package sql;
 
 import util.stream.Streamable;
 
-import java.util.Optional;
-
 /**
- * An interface between an SQL database and Java objects. Several querying
- * operations are specified and implemented by default in this interface.
- * Implementors may choose to override these methods if desired, but the logic
- * defined in this class provides for the best general-case performance.
+ * An interface between a information in a database and Java objects. Several
  *
- * @param <T> The type of elements stored by this accessor, parametrized over
- *        {@link SQLObject}.
+ * @param <T> The type of elements stored by this accessor.
  */
-public interface BaseAccessor<T extends SQLObject<? super T>>
+public interface BaseAccessor<T>
     extends Streamable<T>
 {
 
@@ -53,19 +47,5 @@ public interface BaseAccessor<T extends SQLObject<? super T>>
      *         {@code false} otherwise.
      */
     boolean update(T element);
-
-    /**
-     * Returns an {@code Optional} containing the element with the given
-     * identification number, or an empty one if there is no such element.
-     *
-     * @param id The identification number.
-     * @return An {@code Optional} containing the element with the given
-     *         identification number
-     */
-    default Optional<T> find(int id) {
-        return all()
-                .filter(t -> t.getID() == id)
-                .findFirst();
-    }
 
 }

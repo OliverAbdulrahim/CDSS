@@ -2,6 +2,7 @@ package sql.access;
 
 import model.Symptom;
 import sql.Database;
+import sql.SQLAccessor;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -37,7 +38,7 @@ public class SymptomAccessor
      */
     @Override
     public Symptom createFromSQL(ResultSet result) {
-        return createFromSQL(Symptom.class, result);
+        return SQLAccessor.createFromSQL(Symptom.class, result);
     }
 
 }

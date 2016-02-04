@@ -4,7 +4,8 @@ import model.Ailment;
 import model.Patient;
 import model.Symptom;
 import sql.Database;
-import util.Streams;
+import sql.SQLAccessor;
+import util.stream.Streams;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -87,7 +88,7 @@ public class PatientAccessor
      */
     @Override
     public Patient createFromSQL(ResultSet result) {
-        return createFromSQL(Patient.class, result);
+        return SQLAccessor.createFromSQL(Patient.class, result);
     }
 
 }

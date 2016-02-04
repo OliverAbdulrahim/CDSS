@@ -2,6 +2,7 @@ package sql.access;
 
 import model.Ailment;
 import sql.Database;
+import sql.SQLAccessor;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -37,7 +38,7 @@ public class AilmentAccessor
      */
     @Override
     public Ailment createFromSQL(ResultSet result) {
-        return createFromSQL(Ailment.class, result);
+        return SQLAccessor.createFromSQL(Ailment.class, result);
     }
 
 }
