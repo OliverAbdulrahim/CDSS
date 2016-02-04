@@ -1,4 +1,4 @@
-package sql;
+package sql.access;
 
 import util.stream.Streamable;
 

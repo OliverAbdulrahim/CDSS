@@ -2,7 +2,6 @@ package sql.access;
 
 import model.Ailment;
 import sql.Database;
-import sql.SQLAccessor;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

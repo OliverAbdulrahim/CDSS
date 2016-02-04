@@ -1,4 +1,6 @@
-package sql;
+package sql.access;
+
+import sql.SQLObject;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

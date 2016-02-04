@@ -1,8 +1,6 @@
 package sql.access;
 
-import sql.BaseAccessor;
 import sql.Database;
-import sql.SQLAccessor;
 import sql.SQLObject;
 import sql.Table;
 

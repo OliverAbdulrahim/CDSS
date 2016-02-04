@@ -4,7 +4,6 @@ import model.Ailment;
 import model.Patient;
 import model.Symptom;
 import sql.Database;
-import sql.SQLAccessor;
 import util.stream.Streams;
 
 import java.sql.Connection;
