@@ -101,8 +101,8 @@ public final class Streams {
 
     /**
      * Returns a {@code Stream} containing concatenation of the elements in the
-     * given {@code Stream}(s). If no argument is given, then the {@code Stream}
-     * will be empty.
+     * given {@code Stream}(s). If no argument is given, then the returned
+     * {@code Stream} will be empty.
      *
      * @param ss The {@code Stream} or {@code Stream}s to concatenate.
      * @param <T> The type of the element in the {@code Stream}(s) to
@@ -152,7 +152,7 @@ public final class Streams {
 
     /**
      * Returns a {@code Set} containing the intersection of the elements in the
-     * given {@code Stream}s, partitioned by the specified mapping function.
+     * given {@code Stream}s.
      *
      * @param a The {@code Stream} whose elements to intersect with {@code b}
      *        using the specified mapping {@code Function}.
@@ -182,14 +182,13 @@ public final class Streams {
     }
 
     /**
-     * Returns an {@code Optional} containing the key occurring most minimally,
-     * as defined by the given comparing function, or an empty one if there is
-     * no such element.
+     * Returns an {@code Optional} containing the value occurring least often in
+     * the given {@code Stream}, or an empty one if there is no such element.
      *
      * @param s The {@code Stream} containing the element to find.
      * @param <T> The type of value stored in the given map.
-     * @return An {@code Optional} containing the key occurring most minimally,
-     *         as defined by the given comparing function.
+     * @return An {@code Optional} containing the value in the given
+     *         {@code Stream} occurring most minimally.
      */
     public static <T> Optional<T> min(Stream<? extends T> s) {
         return occurrences(s).entrySet()
@@ -199,14 +198,13 @@ public final class Streams {
     }
 
     /**
-     * Returns an {@code Optional} containing the key occurring most maximally,
-     * as defined by the given comparing function, or an empty one if there is
-     * no such element.
+     * Returns an {@code Optional} containing the value occurring most often in
+     * the given {@code Stream}, or an empty one if there is no such element.
      *
      * @param s The {@code Stream} containing the element to find.
      * @param <T> The type of value stored in the given map.
-     * @return An {@code Optional} containing the key occurring most maximally,
-     *         as defined by the given comparing function.
+     * @return An {@code Optional} containing the value in the given
+     *         {@code Stream} occurring most maximally.
      */
     public static <T> Optional<T> max(Stream<? extends T> s) {
         return occurrences(s).entrySet()

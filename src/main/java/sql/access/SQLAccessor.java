@@ -58,8 +58,8 @@ public interface SQLAccessor<T extends SQLObject<? super T>>
      * Returns a {@code Stream} containing all rows in the SQL table that this
      * object represents, expressed as Java objects.
      *
-     * @return A {@code Stream} containing all rows in the SQL table as Java
-     *         objects.
+     * @return A {@code Stream} of the data contained in the SQL table this
+     *         object represents.
      */
     @Override
     default Stream<T> all() {
@@ -68,47 +68,49 @@ public interface SQLAccessor<T extends SQLObject<? super T>>
     }
 
     /**
-     * Inserts the given element into the SQL database using an {@code INSERT}
-     * statement, returning {@code true} if the element was added.
+     * Inserts the given object into the database using an {@code INSERT}
+     * statement, returning {@code true} if the operation was successful.
      *
-     * @param element The element to insert.
-     * @return {@code true} if the element was added.
+     * @param t The object to insert.
+     * @return {@code true} if the add operation was successful.
      */
     @Override
-    default boolean insert(T element) {
-        String sql = "DELETE FROM" + tableName()
-                + "  WHERE id=" + element.getID();
+    default boolean insert(T t) {
+        String sql = "INSERT INTO" + tableName()
+                + "  VALUES (" + t.toINSERTString() + ')';
         query(sql);
         return true;
     }
 
     /**
-     * Deletes the given element from the SQL database if it is present,
-     * returning {@code true} if the element was deleted.
+     * Deletes the given object, if it is present, from the database using a
+     * {@code DELETE} statement, returning {@code true} if the operation was
+     * successful.
      *
-     * @param element The element to delete.
-     * @return {@code true} if the element was deleted.
+     * @param t The element to delete.
+     * @return {@code true} if the delete operation was successful.
      */
     @Override
-    default boolean delete(T element) {
+    default boolean delete(T t) {
         String sql = "DELETE FROM" + tableName()
-                + "  WHERE id=" + element.getID();
+                + "  WHERE id=" + t.getID();
         query(sql);
         return true;
     }
 
     /**
-     * Updates the given element if it is present in the database using a DELETE
-     * statement, returning {@code true} if the element was deleted.
+     * Updates the given element, if it is present, in the database using an
+     * {@code UPDATE} statement, returning {@code true} if the operation was
+     * successful.
      *
-     * @param element The element containing the updated data.
-     * @return {@code true} if the element was successfully updated.
+     * @param t The object containing the updated data.
+     * @return {@code true} if the update operation was successful.
      */
     @Override
-    default boolean update(T element) {
+    default boolean update(T t) {
         String sql = "UPDATE " + tableName()
-                + "  SET " + element.toSETString()
-                + "  WHERE id=" + element.getID();
+                + "  SET " + t.toSETString()
+                + "  WHERE id=" + t.getID();
         query(sql);
         return true;
 
