@@ -49,11 +49,13 @@ public abstract class AbstractSQLAccessor<T extends SQLObject<? super T>>
      * @param table The table for the object. Common {@code Table} objects are
      *        enumerated in the {@link Database} class.
      */
-    protected AbstractSQLAccessor(Connection connection, Table<T> table) {
+    protected AbstractSQLAccessor(
+            Connection connection,
+            Table<? extends T> table)
+    {
         this.connection = connection;
         this.table = table;
     }
-
 
     /**
      * Returns the {@code Class} of the Java objects represented by this object.
@@ -63,7 +65,6 @@ public abstract class AbstractSQLAccessor<T extends SQLObject<? super T>>
     protected Class<? extends T> targetClass() {
         return table.getTargetClass();
     }
-
 
     /**
      * Returns the name of the SQL table this object represents.
