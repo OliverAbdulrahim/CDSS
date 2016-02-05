@@ -73,7 +73,7 @@ public interface Streamable<T> {
      * @return An {@code Optional} containing the element occurring most
      *         minimally.
      */
-    default Optional<T> minimal() {
+    default Optional<T> min() {
         return Streams
                 .min(all());
     }
@@ -85,7 +85,7 @@ public interface Streamable<T> {
      * @return An {@code Optional} containing the element occurring most
      *         maximally.
      */
-    default Optional<T> maximal() {
+    default Optional<T> max() {
         return Streams
                 .max(all());
     }
