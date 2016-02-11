@@ -4,8 +4,6 @@ import util.AbstractToStringHelper;
 
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Function;
 
 /**
  * An immutable {@code String} representation of a given object. Objects of this
@@ -70,13 +68,8 @@ import java.util.function.Function;
  * @author Oliver Abdulrahim
  */
 public class ReflectiveToStringHelper
-        extends AbstractToStringHelper
+    extends AbstractToStringHelper
 {
-
-    /**
-     * The object that this helper represents.
-     */
-    private Object target;
 
     /**
      * Constructs a {@code ReflectiveToStringHelper} with the given object as
@@ -89,7 +82,12 @@ public class ReflectiveToStringHelper
      */
     public ReflectiveToStringHelper(Object target) {
         super(target);
-        Map<String, Object> upstream = namesToValues();
+        // Map the names of the fields in the target object to their values
+        Map<String, Object> upstream = ReflectionUtilities.mapFields(
+                target.getClass(),
+                Field :: getName,
+                f -> ReflectionUtilities.getValue(target, f)
+        );
         addAll(upstream);
     }
 
@@ -105,34 +103,6 @@ public class ReflectiveToStringHelper
     public String toString() {
         String entries = toString(e -> e.getKey() + '=' + get(e.getKey()));
         return name() + '{' + entries + '}';
-    }
-
-    /**
-     * Returns a {@code String} representation of the target object, formatted
-     * using the specified {@code Function}.
-     *
-     * @param mapper The formatting function.
-     * @return A {@code String} representation of the target object.
-     */
-    public String toString(
-            Function<? super Entry<String, Object>, String> mapper)
-    {
-        return formatEntries(mapper);
-    }
-
-    /**
-     * Returns a {@code Map} that associates the names of the fields of the
-     * target object to their values.
-     *
-     * @return A map containing the names of the fields of the target object to
-     *         their values.
-     */
-    private Map<String, Object> namesToValues() {
-        return ReflectionUtilities.mapFields(
-                target.getClass(),
-                Field :: getName,
-                f -> ReflectionUtilities.getValue(target, f)
-        );
     }
 
 }

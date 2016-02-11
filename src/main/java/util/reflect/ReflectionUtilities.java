@@ -129,8 +129,8 @@ public final class ReflectionUtilities {
      *        {@code Map}.
      * @param valueMapper A mapping function to produce values for the new
      *        {@code Map}.
-     * @param <K> The output type of the key mapping function, and type of the
-     *        keys of the returned {@code Map}.
+     * @param <K> The output type of the key mapping function, and the type of
+     *        the keys of the returned {@code Map}.
      * @param <V> The output type of the value mapping function, and the type of
      *        the values of the returned {@code Map}.
      * @return A {@code Map} whose keys and values are the result of the given
