@@ -39,7 +39,7 @@ public abstract class AbstractSQLAccessor<T extends SQLObject<? super T>>
     /**
      * Encapsulation of the SQL table that this object represents.
      */
-    private final Table<? extends T> table;
+    private final Table<T> table;
 
     /**
      * Sole constructor for use by subclasses only. Constructs a new
@@ -49,10 +49,7 @@ public abstract class AbstractSQLAccessor<T extends SQLObject<? super T>>
      * @param table The table for the object. Common {@code Table} objects are
      *        enumerated in the {@link Database} class.
      */
-    protected AbstractSQLAccessor(
-            Connection connection,
-            Table<? extends T> table)
-    {
+    protected AbstractSQLAccessor(Connection connection, Table<T> table) {
         this.connection = connection;
         this.table = table;
     }
@@ -62,7 +59,7 @@ public abstract class AbstractSQLAccessor<T extends SQLObject<? super T>>
      *
      * @return The {@code Class} of the Java objects represented by this object.
      */
-    protected Class<? extends T> targetClass() {
+    protected Class<T> targetClass() {
         return table.getTargetClass();
     }
 
