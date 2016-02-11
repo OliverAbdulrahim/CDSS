@@ -15,9 +15,9 @@ import java.util.stream.Stream;
  * The {@code Streams} class contains utility methods related to the
  * {@link Collection} and {@link Stream} hierarchies.
  *
- * @author Oliver Abdulrahim
  * @see Collection
  * @see Stream
+ * @author Oliver Abdulrahim
  */
 public final class Streams {
 

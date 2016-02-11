@@ -16,6 +16,7 @@ import util.stream.Streamable;
  *   </ul>
  *
  * @param <T> The type of elements stored by this accessor.
+ * @author Oliver Abdulrahim
  */
 public interface BaseAccessor<T>
     extends Streamable<T>

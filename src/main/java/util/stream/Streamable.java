@@ -15,6 +15,7 @@ import java.util.stream.Stream;
  *
  * @param <T> The type of object in the {@code Stream}.
  * @see Stream
+ * @author Oliver Abdulrahim
  */
 public interface Streamable<T> {
 

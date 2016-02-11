@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  * class provides for the best general-case performance.
  *
  * @param <T> {@inheritDoc}
+ * @author Oliver Abdulrahim
  */
 public abstract class AbstractSQLAccessor<T extends SQLObject<? super T>>
     implements SQLAccessor<T>

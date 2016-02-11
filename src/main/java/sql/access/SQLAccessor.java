@@ -20,6 +20,7 @@ import static util.reflect.ReflectionUtilities.*;
  *
  * @param <T> The type of elements stored by this accessor, parametrized over
  *        {@link SQLObject}.
+ * @author Oliver Abdulrahim
  */
 public interface SQLAccessor<T extends SQLObject<? super T>>
     extends BaseAccessor<T>

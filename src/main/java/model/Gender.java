@@ -7,6 +7,7 @@ package model;
  *           the {@code super} implementation is sufficient in this case
  *           (the method is not actually virtual anyway). Just implement the
  *           interface here for the sake of clarity.
+ * @author Oliver Abdulrahim
  */
 public enum Gender
     implements Comparable<Gender>

@@ -11,8 +11,8 @@ import java.sql.ResultSet;
  * {@link Symptom} class, allowing for the creation of {@code Symptom} objects
  * from SQL.
  *
- * @author Oliver Abdulrahim
  * @see Symptom
+ * @author Oliver Abdulrahim
  */
 public class SymptomAccessor
     extends AbstractSQLAccessor<Symptom>

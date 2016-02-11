@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
  * {@link Patient} class, allowing for the creation of {@code Patient} objects
  * from SQL.
  *
- * @author Oliver Abdulrahim
  * @see Patient
+ * @author Oliver Abdulrahim
  */
 public class PatientAccessor
     extends AbstractSQLAccessor<Patient>

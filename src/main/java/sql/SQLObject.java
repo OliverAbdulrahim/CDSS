@@ -11,6 +11,7 @@ import java.util.Objects;
  *
  * @param <T> The type of object that this class represents, upper bounded by
  *        this class.
+ * @author Oliver Abdulrahim
  */
 public abstract class SQLObject<T extends SQLObject>
     implements Comparable<T>, Serializable

@@ -11,8 +11,8 @@ import java.sql.ResultSet;
  * {@link Ailment} class, allowing for the creation of {@code Ailment} objects
  * from SQL.
  *
- * @author Oliver Abdulrahim
  * @see Ailment
+ * @author Oliver Abdulrahim
  */
 public class AilmentAccessor
     extends AbstractSQLAccessor<Ailment>
