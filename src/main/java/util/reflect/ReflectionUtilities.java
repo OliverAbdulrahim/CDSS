@@ -297,7 +297,7 @@ public final class ReflectionUtilities {
      * @return A {@code Predicate} that returns {@code true} for any and all
      *         arguments.
      */
-    private static <T> Predicate<? super T> dummyPredicate() {
+    private static <T> Predicate<T> dummyPredicate() {
         return no_op -> true;
     }
 
