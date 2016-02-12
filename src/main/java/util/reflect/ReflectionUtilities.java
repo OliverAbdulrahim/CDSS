@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -107,13 +108,14 @@ public final class ReflectionUtilities {
      * @param f The field whose value to retrieve.
      * @return The value stored within the given {@code Field}.
      */
-    public static Object getValue(Object obj, Field f) {
-        Object value = null;
+    public static Optional<?> getValue(Object obj, Field f) {
+        Optional<?> value = Optional.empty();
         try {
             f.setAccessible(true);
-            value = f.get(obj);
+            Object fieldData = f.get(obj);
+            value = value.map(v -> fieldData);
         }
-        catch (IllegalAccessException ex) {
+        catch (IllegalAccessException ex) { // CHECKED EXCEPTIONS !! :(
             Logger.getLogger(ReflectionUtilities.class.getName())
                     .log(Level.SEVERE, "Can't access field = " + f, ex);
         }

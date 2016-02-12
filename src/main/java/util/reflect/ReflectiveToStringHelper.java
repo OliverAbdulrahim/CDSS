@@ -86,7 +86,9 @@ public class ReflectiveToStringHelper
         Map<String, Object> upstream = ReflectionUtilities.mapFields(
                 target.getClass(),
                 Field :: getName,
-                f -> ReflectionUtilities.getValue(target, f)
+                f -> ReflectionUtilities
+                        .getValue(target, f)
+                        .get() // Should never be exceptional behavior
         );
         addAll(upstream);
     }
